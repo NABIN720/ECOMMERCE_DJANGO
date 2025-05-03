@@ -1,0 +1,29 @@
+{% extends 'dokan/basic.html'%}
+{% block title%} Contact {%endblock%}
+{% block body%} 
+<div class="container">
+    <form action="/dokan/contact/" method="post">
+        {%csrf_token%}
+        <div class="m-3 form-group">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your Name">
+        </div>
+
+        <div class="m-3 form-group">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+        </div>
+
+        <div class="m-3 form-group">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="phone" name="phone" placeholder="Enter your Phone number">
+        </div>
+
+        <div class="m-3 form-group">
+            <label for="desc" class="form-label">Enter your query</label>
+            <textarea class="form-control" id="desc" name="desc" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-success">Submit</button>
+    </form>
+</div>
+{%endblock%}

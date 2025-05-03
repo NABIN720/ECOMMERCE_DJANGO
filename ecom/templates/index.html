@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sabaiko Pasal Welcome</title>
+    <style>
+        body {
+            background: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .logo {
+            margin-top: 20px;
+        }
+        .logo img {
+            width: 300px;
+        }
+        .welcome {
+            margin-top: 24px;
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .site-name {
+            color: #e60013;
+        }
+        .enter-btn {
+            margin: 48px 0 0 0;
+        }
+        .enter-btn button {
+            background: #fff;
+            color: #e60013;
+            border: 2px solid #e60013;
+            padding: 14px 40px;
+            border-radius: 6px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .enter-btn button:hover {
+            background: #e60013;
+            color: #fff;
+        }
+        /* Subtle background pattern */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: url("{% static 'ecom/images/pasalbg.jpg' %}");
+            background-size: cover; 
+            background-repeat: no-repeat;
+            opacity: 0.07;
+            z-index: -1;
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        
+        <img src="{%static 'ecom/images/hamropasal.png'%}" alt="Logo">
+        <!-- <img src="" alt="Logo"> -->
+    </div>
+    <div class="welcome">
+        Welcome to <span class="site-name">Sabaiko Pasal <br> E-Commerce Website</span>
+    </div>
+    <div class="enter-btn">
+        <button onclick="window.location.href='dokan/'">Enter Website &rarr;</button>
+    </div>
+</body>
+</html>
