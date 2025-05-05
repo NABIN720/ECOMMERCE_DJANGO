@@ -1,0 +1,211 @@
+{% extends 'accounts/base.html'%}
+{% block title %}Register Your Credentials{% endblock %}
+
+{% block css %}
+<style>/* Fullscreen container */
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #121212;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+      
+    /* Form container centered */
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 90%;
+      max-width: 600px;
+      padding: 40px;
+      border-radius: 20px;
+      background-color: #1a1a1a;
+      color: #fff;
+      border: 1px solid #333;
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.1);
+    }
+    
+    /* Title styling */
+    .title {
+      font-size: 32px;
+      font-weight: 600;
+      letter-spacing: -1px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      padding-left: 30px;
+      color: #00bfff;
+    }
+    
+    .title::before,
+    .title::after {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      left: 0px;
+      background-color: #00bfff;
+    }
+    
+    .title::after {
+      animation: pulse 1s linear infinite;
+    }
+    
+    .message, 
+    .signin {
+      font-size: 14.5px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .signin {
+      text-align: center;
+    }
+    
+    .signin a {
+      color: #00bfff;
+      text-decoration: none;
+    }
+    
+    .signin a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Input field group */
+    .flex {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    
+    .form label {
+      position: relative;
+      width: 100%;
+    }
+    
+    .form label .input {
+      background-color: #333;
+      color: #fff;
+      width: 100%;
+      padding: 20px 10px 10px 10px;
+      outline: 0;
+      border: 1px solid rgba(105, 105, 105, 0.397);
+      border-radius: 10px;
+    }
+    
+    .form label .input + span {
+      color: rgba(255, 255, 255, 0.5);
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-size: 0.9em;
+      transition: 0.3s ease;
+      pointer-events: none;
+    }
+    
+    .form label .input:placeholder-shown + span {
+      top: 20px;
+      font-size: 0.9em;
+    }
+    
+    .form label .input:focus + span,
+    .form label .input:valid + span {
+      color: #00bfff;
+      top: 5px;
+      font-size: 0.75em;
+      font-weight: 600;
+    }
+    
+    .input {
+      font-size: medium;
+    }
+    
+    /* Submit Button */
+    .submit {
+      border: none;
+      outline: none;
+      padding: 12px;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      background-color: #00bfff;
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .submit:hover {
+      background-color: #00bfff96;
+    }
+    
+    @keyframes pulse {
+      from {
+        transform: scale(0.9);
+        opacity: 1;
+      }
+      to {
+        transform: scale(1.8);
+        opacity: 0;
+      }
+    }
+    
+
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{messages.tags}} " style="color: #fff;"">
+        {{message}}
+      </div>
+    {% endfor %}
+  {% endif %}
+
+    
+<form class="form" method="post" action="{% url 'signup_view' %}">
+    {% csrf_token %}
+    <p class="title">Register </p>
+    <p class="message">Signup now and login to get full functionality. </p>
+        <div class="flex">
+        <label>
+            <input class="input" name="fname" type="text" placeholder="" required="">
+            <span>Firstname</span>
+        </label>
+
+        <label>
+            <input class="input" name="lname" type="text" placeholder="" required="">
+            <span>Lastname</span>
+        </label>
+    </div>  
+            
+    <label>
+        <input class="input" name="email" type="email" placeholder="" required="">
+        <span>Email</span>
+    </label>
+    
+    <label>
+      <input class="input" name="phone" type="tel" placeholder="" required="">
+      <span>Phone</span>
+  </label>
+        
+    <label>
+        <input class="input" name="pass1" type="password" placeholder="" required="">
+        <span>Password</span>
+    </label>
+    <label>
+        <input class="input" name="pass2" type="password" placeholder="" required="">
+        <span>Confirm password</span>
+    </label>
+    <button class="submit">Submit</button>
+    <p class="signin">Already have an acount ? <a href="{% url 'login_view' %}">Signin</a> </p>
+</form>
+</div>
+{% endblock %}
