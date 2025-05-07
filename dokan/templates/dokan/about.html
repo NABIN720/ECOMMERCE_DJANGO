@@ -3,24 +3,48 @@
 {% block title%} About {%endblock%}
 {% block css%} 
 <style>
-
-.cover-container{
-    position:relative;
-    height:100vh;
-
-}
-.container{
-    position:absolute;
-    top:40%;
-    left:50%;
-    transform: translate(-50%, -50%);
-}
+    .cover-container {
+        position: relative;
+        height: 100vh;
+    }
+    
+    
+    .container {
+        max-width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    
+    @media (min-width: 320px) {
+        .container {
+            position: static;
+            top: auto;
+            left: auto;
+            transform: none;
+            max-width: none;
+        }
+    }
+    
+    @media (min-width: 768px) {
+        .container {
+            max-width: 720px;
+        }
+    }
+    
+    @media (min-width: 992px) {
+        .container {
+            max-width: 960px;
+        }
+    }
+    
 </style>
 {%endblock%}
 {% block body%} 
 
 <div class="cover-container " style="height: 100vh;">
-    <div class="container " style="align-items: center;">
+    <div class="container container-sm" style="align-items: center;"">
     <h1 class="text-center" >Who are we?</h1>
     <p class="lead mt-5">
         Bringing Convenience to Your Doorstep, Right Here in Jhapa
