@@ -186,11 +186,11 @@
   const popoverl = new bootstrap.Popover(exampleEl1,{'html':true});  
   function updatePopover(){
     var popString = "";
-    const isAuth = {{user.is_authenticated}};
+    const isAuth = {{user.is_authenticated|yesno:"true,false" }};
     if(isAuth){
       popString = popString + `<div style="width:120px; height:120px;">
-        <p>{{user.first_name}}{{user.last_name}}<br>{{user.email}}</p>
-        <button class="btn btn-primary btn-dark" type="button"></button>      
+        <h5>{{user.first_name}}{{user.last_name}}</h5><h5>{{user.email}}</h5>
+        <a type="button" href="{% url 'logout'%}" style="text-decoration"> Logout </a>
       
     </div>`;
 

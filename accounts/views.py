@@ -113,14 +113,14 @@ def login_view(request):
                 print(user)
                 login(request, user)
                 next_url = request.GET.get('next')
-                return redirect(next_url)
+                return redirect(next_url) if next_url else redirect('dokan:index')
             else:
                 messages.error(request, 'Enter correct Credentials')
                 return redirect('login_view')
 
         except User.DoesNotExist:
             messages.error(request, 'User Doesnot Exists, Please Sign Up!!!')
-            return redirect('login_view')
+            return redirect('dokan:index')
     
 
 

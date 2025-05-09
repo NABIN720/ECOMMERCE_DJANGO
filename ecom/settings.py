@@ -149,7 +149,8 @@ MEDIA_URL = '/media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # LOGIN_URL = 'login/'
+
 LOGIN_REDIRECT_URL = 'dokan/index'  # Redirect after login
-LOGOUT_REDIRECT_URL = 'signup/'  # Redirect after logout
+LOGOUT_REDIRECT_URL = 'accounts/login/'  # Redirect after logout
 
 

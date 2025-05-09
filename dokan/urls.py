@@ -1,8 +1,9 @@
 from django.urls import path
 from . import views
+app_name = 'dokan'
 
 urlpatterns = [
-    path('',views.index, name="dokanhome"),
+    path('',views.index, name="index"),
     path('about/',views.about, name="AboutUs"),
     path('contact/',views.contact, name="ContactUs"),
     path('tracker/',views.tracker, name="TrackingStatus"),
