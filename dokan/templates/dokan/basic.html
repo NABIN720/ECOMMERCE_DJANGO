@@ -1,4 +1,5 @@
 <!doctype html>
+{% load static %}
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -10,6 +11,7 @@
     {%block css%} {%endblock%}
   </head>
   <body>
+    
     <nav class="navbar navbar-expand-lg bg-body-tertiary "data-bs-theme="dark">
       <div class="container-fluid">
         <a class="navbar-brand" href="/dokan">Mycommerceweb</a>
@@ -36,17 +38,19 @@
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
-          <!-- <button type="button" class="btn btn-secondary mx-2" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
-            Cart(<span id="cart"></span>)
-          </button> -->
-          <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="nabin" id="tooltips">
+          <button type="button" class="btn btn-secondary mx-1" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="nabin" id="tooltips">
             Cart(<span id="cart">0</span>)
+          </button>
+          <button class="btn btn-light border-0 p-1 mx-2" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="nabin" id="tooltip" style="
+    border-radius: 50%;">
+            <img src="{% static 'dokan/images/user1.png'%}" alt="user" width="28" height="28" class="rounded-circle">  
+                     
           </button>
         </div>
       </div>
     </nav>
     
-    {%block body%} {%endblock%}
+    {% block body %} {% endblock %}
 
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>

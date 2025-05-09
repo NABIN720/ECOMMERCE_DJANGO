@@ -5,6 +5,7 @@ from math import ceil
 import json
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 @login_required
 def index(request):
@@ -25,8 +26,12 @@ def index(request):
         nSlides = n//4 + ceil(n/4 - n//4)
         m_products.append([product, range(1, nSlides), nSlides])
 
-
-    params = {'m_products':m_products}
+    full_name = f"{request.user.first_name} {request.user.last_name}"
+    email = request.user.email
+    params = {'m_products':m_products,
+              'full_name':full_name,
+              'email':email
+              }
     return render(request, 'dokan/index.html',params)
 
 def about(request):
@@ -91,6 +96,10 @@ def checkout(request):
         return render(request,'dokan/checkout.html', {'thank':thank, 'id':id})
     return render(request, 'dokan/checkout.html')
 
+# def target_view(request):
+#     name = request.session.get('full_name')
+#     email = request.session.get('email')
+#     return render(request, 'dokan/index.html',{'name':name,'em'})
 
 
 # def search(request):

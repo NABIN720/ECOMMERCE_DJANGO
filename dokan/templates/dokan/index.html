@@ -120,7 +120,8 @@
 {%block js%}
   <script> 
     const exampleEl = document.getElementById('tooltips');
-    const popovers = new bootstrap.Popover(exampleEl,{'html':true,'sanitize': false});   
+    const popovers = new bootstrap.Popover(exampleEl,{'html':true,'sanitize': false});
+     
     if (localStorage.getItem('cart') == null){
       var cart = {};
     }
@@ -180,6 +181,29 @@
       popovers.show();
       console.log(popStr);
   } 
+
+  const exampleEl1 = document.getElementById('tooltip');
+  const popoverl = new bootstrap.Popover(exampleEl1,{'html':true});  
+  function updatePopover(){
+    var popString = "";
+    const isAuth = {{user.is_authenticated}};
+    if(isAuth){
+      popString = popString + `<div style="width:120px; height:120px;">
+        <p>{{user.first_name}}{{user.last_name}}<br>{{user.email}}</p>
+        <button class="btn btn-primary btn-dark" type="button"></button>      
+      
+    </div>`;
+
+    }
+    else{
+      popstring;
+    }
+    
+    popoverl.setContent({'.popover-body':popString});
+    popoverl.show();
+
+  }
+updatePopover();
 
   function clearCart(){
       cart = JSON.parse(localStorage.getItem('cart'));
