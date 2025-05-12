@@ -1,4 +1,4 @@
-{% extends 'accounts/base.html'%}
+{% extends 'base.html'%}
 {% block title %}Register Your Credentials{% endblock %}
 
 {% block css %}
@@ -103,7 +103,7 @@ body, html {
 </style>
 {% endblock %}
 
-{% block body %}
+{% block content %}
 <div class="container">
     <div class="card">
         <h4 class="title">Log In!</h4>
@@ -130,7 +130,7 @@ body, html {
           </div>
           
           <button class="btn" type="submit">Login</button>
-          <a href="#" class="btn-link">Forgot your password?</a>
+          <a href="{% url 'password_reset'%}" class="btn-link">Forgot your password?</a>
           <a class="btn-link" href="{% url 'signup_view' %} " >Signup</a>
         </form>
       </div>

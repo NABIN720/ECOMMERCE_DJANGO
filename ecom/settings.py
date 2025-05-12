@@ -15,6 +15,14 @@ import os
 from .info import *
 
 
+# Crispy forms
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = "bootstrap5"
+AUTH_USER_MODEL = 'accounts.CustomUser' 
+
+# # Site ID
+# SITE_ID = 1
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = EMAIL_USE_TLS
@@ -33,7 +41,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-d%&4(uuvlw_)xdrp(0cujsuaq6(-0)3ee(hj0i#14wxpuc4_88'
+SECRET_KEY = SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -47,10 +55,13 @@ INSTALLED_APPS = [
     'dokan.apps.DokanConfig',
     'django.contrib.admin',
     'django.contrib.auth',
+    # 'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_bootstrap5',
     'accounts',
     'widget_tweaks',
 ]
@@ -70,7 +81,7 @@ ROOT_URLCONF = 'ecom.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['ecom/templates'],
+        'DIRS': ['ecom/templates','templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -152,5 +163,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'dokan/index'  # Redirect after login
 LOGOUT_REDIRECT_URL = 'accounts/login/'  # Redirect after logout
-
-

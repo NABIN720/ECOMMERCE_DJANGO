@@ -1,3 +1,4 @@
+from .models import customUser
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -13,7 +14,8 @@ from django.template.loader import get_template,render_to_string
 from django.urls import reverse
 from django.utils.html import strip_tags
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
-from django.utils.encoding import force_bytes
+from django.utils.encoding import force_bytes, force_str
+from .forms import CustomPasswordResetForm, CustomSetPasswordForm
 # Create your views here.
 
 def index(request):
@@ -42,11 +44,11 @@ def signup_view(request):
             messages.error(request,"Username must be alphanumeric")
             return redirect("signup_view")
         
-        if User.objects.filter(username=username).exists():
+        if customUser.objects.filter(username=username).exists():
             messages.error(request,"Username already exists, please try with different email!!!")
             return redirect("signup_view")
 
-        userObj = User.objects.create_user(username=username, email=email,password=pass1)
+        userObj = customUser.objects.create_user(username=username, email=email,password=pass1)
         userObj.first_name = fname
         userObj.last_name = lname
         userObj.is_active = False
@@ -100,8 +102,8 @@ def login_view(request):
         username = request.POST.get('username')
         pass1 = request.POST.get('pass1')
         print("All Users:")
-        for u in User.objects.all():
-            print(f"{u.username} - {u.email} error")
+        # for u in User.objects.all():
+        #     print(f"{u.username} - {u.email} error")
 
         try:
             # userObj = User.objects.get(email=email)
@@ -118,7 +120,7 @@ def login_view(request):
                 messages.error(request, 'Enter correct Credentials')
                 return redirect('login_view')
 
-        except User.DoesNotExist:
+        except customUser.DoesNotExist:
             messages.error(request, 'User Doesnot Exists, Please Sign Up!!!')
             return redirect('dokan:index')
     
@@ -134,7 +136,7 @@ def logout_view(request):
 def activate(request, uidb64, token):
     try:
         uid = urlsafe_base64_decode(uidb64).decode()
-        user = User.objects.get(pk=uid)
+        user = customUser.objects.get(pk=uid)
 
     except (TypeError, ValueError, OverflowError, User.DoesNotExist):
         user = None
@@ -154,3 +156,63 @@ def activate(request, uidb64, token):
 #     request.session['full_name'] = f"{request.user.first_name} {request.user.last_name}"
 #     request.session['email'] = request.user.email
 #     return redirect('dokan:index')
+def password_reset(request):
+    if request.method == 'POST':
+        form = CustomPasswordResetForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email']
+            associated_user = customUser.objects.filter(email=email).first()
+            if associated_user:
+                current_site = get_current_site(request)
+                subject = 'Password Reset Request'
+                message = render_to_string('accounts/password_reset_email.html', {
+                    'user': associated_user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(associated_user.pk)),
+                    'token': default_token_generator.make_token(associated_user),
+                })
+                send_mail(subject, message, None, [associated_user.email])
+                messages.success(request, 'Password reset link has been sent to your email.')
+                return redirect('login_view')
+            else:
+                messages.error(request, 'No account is associated with this email address.')
+    else:
+        form = CustomPasswordResetForm()
+    return render(request, 'accounts/pass_reset.html', {'form': form})
+
+def password_reset_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = customUser.objects.get(pk=uid)
+    except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+
+    if user is not None or default_token_generator.check_token(user, token):
+        if request.method == 'POST':
+            form = CustomSetPasswordForm(user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, 'The password reset suceed.')
+                return redirect('login_view')
+        else:
+            form = CustomSetPasswordForm(user)
+        
+        return render(request, 'accounts/pass_reset_confirm.html', {'form': form})
+    else:
+        messages.error(request, 'The password reset link is invalid or has expired.')
+        return redirect('dokan.index')
+
+            # password1 = request.POST.get('password1')
+            # password2 = request.POST.get('password2')
+            
+            # if not password1 or not password2:
+            #     messages.error(request, 'Both password fields are required.')
+            # elif password1 != password2:
+            #     messages.error(request, 'Passwords do not match.')
+            # else:
+            #     user.set_password(password1)
+            #     user.save()
+            #     messages.success(request, 'Your password has been reset. You can now log in.')
+            #     return redirect('login_view')
+    
+    # return render(request, 'accounts/password_reset_confirm.html')
